@@ -13,7 +13,6 @@ When submitting code:
 **In order to help reviewers reason about the changes and implications of changes, try to submit small pull requests that represent a single feature or change.**
 
 1. Write your code
-   * When creating new API endpoints ensure they are documented to allow Swagger generation
    * TODO: Pick a style guide to follow
 
 2. Write tests:
