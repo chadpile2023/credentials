@@ -1,0 +1,114 @@
+buildscript {
+    ext {
+        springBootVersion = "1.5.16.RELEASE"
+        springCloudVersion = "Edgware.SR4"
+    }
+
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.3.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: "org.springframework.boot"
+apply plugin: 'info.solidsoft.pitest'
+apply plugin: 'jacoco'
+
+description 'oauth2-client-credentials-interceptor'
+group = 'com.scotiabank.oauth2'
+version = '1.0.0'
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': project.description,
+                'Implementation-Version': project.version
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.security.oauth:spring-security-oauth2"
+    compile "com.nimbusds:nimbus-jose-jwt:5.1"
+    compile "com.google.guava:guava:20.0"
+    compile "javax.validation:validation-api:2.0.1.Final"
+    compile "org.hibernate:hibernate-validator:6.0.9.Final"
+
+    compileOnly "org.projectlombok:lombok:1.16.16"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+    testCompile "org.mockito:mockito-core:2.18.0"
+    testCompileOnly "org.projectlombok:lombok:1.16.16"
+}
+
+bootRepackage {
+    enabled = false
+}
+
+tasks.withType(JavaCompile) {
+    options.deprecation = true
+    options.incremental = true
+    options.encoding = 'UTF-8'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+jacoco {
+    toolVersion = '0.7.9'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${reportsDir}/jacoco"
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'INSTRUCTION'
+
+                minimum = 0.93
+            }
+
+            limit {
+                counter = 'BRANCH'
+
+                minimum = 0.75
+            }
+        }
+    }
+}
+
+pitest {
+    threads = 8
+
+    mutators = ["ALL"]
+
+    mutationThreshold = 72
+    timestampedReports = false
+    outputFormats = ['XML', 'HTML']
+}
+
+check.dependsOn 'jacocoTestCoverageVerification', 'pitest'
+
+defaultTasks 'clean', 'build'
