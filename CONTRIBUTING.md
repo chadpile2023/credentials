@@ -2,7 +2,7 @@
 
 ## Code of Conduct
 
-Please read and follow our [Code of Conduct](https://github.com/scotiabank/accelerator-initializer/blob/master/CODE_OF_CONDUCT.md).
+Please read and follow our [Code of Conduct](https://github.com/scotiabank/oauth2-client-credentials-interceptor/blob/master/CODE_OF_CONDUCT.md).
 
 ## Submitting Code
 

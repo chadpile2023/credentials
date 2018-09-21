@@ -77,6 +77,10 @@ public class MySecureHttpClient {
   }
 }
 ```
+
+## Feedback and Questions
+ Join us on [Slack](https://plato-open-source.slack.com/) by [requesting an invite](https://plato-open-source-slack-invite.herokuapp.com/)
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
