@@ -1,6 +1,8 @@
 # Client Credentials Interceptor
 
-This repository contains a source code of an HTTP request interceptor that augments it by passing along OAuth 2.0 Bearer Token captured earlier using the client credentials flow.
+The OAuth2 Client Credentials Interceptor library is a Java library that integrates with Spring Boot applications to allow configuration of an HTTP request interceptor that injects an OAuth2 bearer token retrieved using the client credentials flow into outgoing HTTP requests.
+
+It enables the usage of the JWT Bearer grant with the client credentials flow, and also provides token management capabilities that makes a best effort to always include a valid token with outgoing requests without the overhead of inline requests to the OAuth2 provider. There are a number of configuration options, including configuring the OAuth2 provider url, token expiry, and the keystore to be used to sign the grant request.
 
 ## Getting Started
 
